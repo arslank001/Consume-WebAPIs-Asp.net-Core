@@ -1,0 +1,55 @@
+﻿@model IEnumerable<RestfulAPIs_Asp.netCore.Models.StudentModel>
+@{
+    ViewData["Title"] = "Index";
+    int Count = 1;
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-10 offset-1">
+            <h1 class="text-center text-primary">Students Record</h1>
+            <a class="btn btn-sm btn-success m-1" asp-controller="StudentAPIConsume" asp-action="AddStudent">Add</a>
+            <p class="text-center text-success">@TempData["Exception"]</p>
+            <p class="text-center text-danger">@TempData["Error"]</p>
+            <p class="text-center text-danger">@TempData["Success"]</p>
+            <table class="table table-bordered">
+                <tr class="text-center">
+                    <th>Sr. No</th>
+                    <th>Registration No</th>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+                @if (Model.Count() > 0)
+                {
+                    @foreach (var Std in Model)
+                    {
+                        <tr>
+                            <td>@Count</td>
+                            <td>@Std.RegistrationNo</td>
+                            <td>@Std.Name</td>
+                            <td>@Std.Gender</td>
+                            <td>@Std.IsActive</td>
+                            <td>
+                                <a class="btn btn-sm btn-primary" asp-controller="StudentAPIConsume" asp-action="Edit" asp-route-id="@Std.StudentID">Edit</a>
+                                <a class="btn btn-sm btn-danger" asp-controller="StudentAPIConsume" asp-action="Delete" asp-route-id="@Std.StudentID">Delete</a>
+                                <a class="btn btn-sm btn-warning" asp-controller="StudentAPIConsume" asp-action="Details" asp-route-id="@Std.StudentID">Details</a>
+                            </td>
+                        </tr>
+                        Count++;
+                    }
+                }
+                else
+                {
+                    <tr class="text-center">
+                        <td colspan="6">
+                            <h2 class="text-warning bg-info">No Record Found</h2>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+
